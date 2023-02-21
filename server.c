@@ -1,29 +1,52 @@
-#include "minitalk.h"
-#include <signal.h>
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ckarakus <ckarakus@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/21 20:00:55 by ckarakus          #+#    #+#             */
+/*   Updated: 2023/02/22 00:13:33 by ckarakus         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void    sig_handler(int signum)
+#include "minitalk.h"
+
+void	ft_convert_char(int data)
 {
-    if (signum == SIGUSR1)
-        ft_putstr("SIGUSR1 USED \n");
-    else if (signum == SIGUSR2)
-        ft_putstr("SIGUSR2 USED \n");
+	static unsigned int		i = 7;
+	static unsigned char	c;
+
+	c += data << i;
+	if (i == 0)
+	{
+		write(1, &c, 1);
+		i = 7;
+		c = 0;
+	}
+	else
+		i--;
 }
 
-int main(void)
+void	ft_sig_handler(int sig)
 {
-    struct  sigaction   sa_signal;
-    int                 error_check;
+	if (sig == SIGUSR1)
+		ft_convert_char(1);
+	else if (sig == SIGUSR2)
+		ft_convert_char(0);
+}
 
-    ft_putstr("PID: ");
-    ft_putnbr(getpid());
-    ft_putchar('\n');
-    sa_signal.sa_handler = sig_handler;
-    error_check = sigaction(SIGUSR1, &sa_signal, NULL);
-    error_check = sigaction(SIGUSR2, &sa_signal, NULL);
-    if (error_check == -1)
-		ft_putstr("ERROR\n");
-    while (1)
-        pause();
-    return (0);
+int	main(void)
+{
+	int	pid;
+
+	pid = getpid();
+	ft_putstr_fd("PID => ", 1);
+	ft_putnbr_fd(pid, 1);
+	ft_putchar_fd('\n', 1);
+	signal(SIGUSR1, ft_sig_handler);
+	signal(SIGUSR2, ft_sig_handler);
+	while (1)
+		pause();
+	return (0);
 }
