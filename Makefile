@@ -6,7 +6,7 @@
 #    By: ckarakus <ckarakus@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/24 22:10:21 by ckarakus          #+#    #+#              #
-#    Updated: 2023/02/24 22:10:22 by ckarakus         ###   ########.fr        #
+#    Updated: 2023/02/24 22:17:31 by ckarakus         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ $(BONUS_SERVER) : $(BONUS_SERVER_OBJ) $(BONUS_UTILS_OBJ)
 
 $(BONUS_CLIENT) : $(BONUS_CLIENT_OBJ) $(BONUS_UTILS_OBJ)
 	$(CC) $(FLAGS) $(BONUS_CLIENT_SRC) $(BONUS_UTILS_SRC) -o $(BONUS_CLIENT)
+
 fclean : clean
 
 clean :
