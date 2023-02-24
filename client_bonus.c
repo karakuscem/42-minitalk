@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ckarakus <ckarakus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/24 21:30:44 by ckarakus          #+#    #+#             */
-/*   Updated: 2023/02/24 22:08:38 by ckarakus         ###   ########.fr       */
+/*   Created: 2023/02/21 20:08:05 by ckarakus          #+#    #+#             */
+/*   Updated: 2023/02/24 22:08:22 by ckarakus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 void	show_error(int err)
 {
@@ -41,12 +41,12 @@ void	show_error(int err)
 	}
 }
 
-void	ft_send_data(int data, int pid)
+void	ft_send_data(int d, int pid)
 {
-	int		i;
-	char	c;
+	static int		i;
+	unsigned char	c;
 
-	c = data;
+	c = d;
 	i = 128;
 	while (i > 0)
 	{
@@ -66,6 +66,17 @@ void	ft_send_data(int data, int pid)
 	}
 }
 
+void	received(int a)
+{
+	static int	flag = 1;
+
+	if (a == SIGUSR2 && flag == 1)
+	{
+		ft_putstr_fd("Message sent succesfully!", 1);
+		flag = 0;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	char	*str;
@@ -73,6 +84,7 @@ int	main(int argc, char **argv)
 	int		i;
 
 	i = 0;
+	signal(SIGUSR2, received);
 	if (!argv[1])
 		show_error(0);
 	else if (!argv[2])
