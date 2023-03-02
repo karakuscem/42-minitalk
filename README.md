@@ -32,8 +32,8 @@ This project provides sending data from Client to Server via UNIX signals.
 
 # Usage
 
-![Usage](https://github.com/karakuscem/42-printf/blob/main/src/100.png)
+![Usage](https://github.com/karakuscem/42-minitalk/blob/main/img/1.png)
 
 # Result
 
-![Minitalk](https://github.com/karakuscem/42-printf/blob/main/src/100.png)
+![Minitalk](https://github.com/karakuscem/42-minitalk/blob/main/img/2.png)
